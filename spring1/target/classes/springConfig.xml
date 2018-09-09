@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+	   xmlns:context="http://www.springframework.org/schema/context"
+       xmlns="http://www.springframework.org/schema/beans"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans-2.5.xsd
+       http://www.springframework.org/schema/aop
+       http://www.springframework.org/schema/aop/spring-aop.xsd
+       http://www.springframework.org/schema/context    
+       http://www.springframework.org/schema/context/spring-context-3.2.xsd">
+       
+      <bean id="aopClass" class="spring1.aop.AopClass"></bean>
+      <bean id="cook" class="spring1.cook.Cook"></bean>
+      <aop:config>
+          <!-- 通过ref设置切面类，用于切割切点 -->
+          <aop:aspect ref="aopClass">
+              <!-- expression用于说明切入时间 -->
+              <aop:pointcut id="pointcut1"
+              expression="execution(* *.cook(..))" />
+              <aop:before pointcut-ref="pointcut1" method="beforeCook" />
+              <aop:after  pointcut-ref="pointcut1" method="afterCook" />
+          </aop:aspect>
+            
+      </aop:config> 
+       
+      
+       
+       
+
+
+
+       
+</beans>
