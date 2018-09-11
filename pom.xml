@@ -116,5 +116,6 @@
   </dependencies>
   <modules>
   	<module>spring1</module>
+  	<module>spring2</module>
   </modules>
 </project>

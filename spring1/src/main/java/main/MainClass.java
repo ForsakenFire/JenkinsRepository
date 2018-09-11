@@ -11,5 +11,6 @@ public class MainClass {
 		context.start();
 		Cook cook = context.getBean(Cook.class);
 		cook.cook();
+		context.close();
 	}
 }
