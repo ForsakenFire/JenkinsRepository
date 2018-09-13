@@ -9,19 +9,8 @@
        http://www.springframework.org/schema/aop/spring-aop.xsd
        http://www.springframework.org/schema/context   
        http://www.springframework.org/schema/context/spring-context.xsd">
+       <context:component-scan base-package="spring3"/>
+       <context:property-placeholder  location="classpath:test.properties"/>
        
-      <bean id="aopClass" class="spring1.aop.AopClass"></bean>
-      <bean id="cook" class="spring1.cook.Cook"  >
-      </bean>
-      <aop:config>
-          <!-- 通过ref设置切面类，用于切割切点 -->
-          <aop:aspect ref="aopClass">
-              <!-- expression用于说明切入时间 -->
-              <aop:pointcut id="pointcut1"
-              expression="execution(* *.cook(..))" />
-              <aop:before pointcut-ref="pointcut1" method="beforeCook" />
-              <aop:after  pointcut-ref="pointcut1" method="afterCook" />
-          </aop:aspect>
-            
-      </aop:config> 
+       
 </beans>

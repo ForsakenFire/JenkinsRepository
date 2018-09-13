@@ -117,5 +117,6 @@
   <modules>
   	<module>spring1</module>
   	<module>spring2</module>
+  	<module>spring3</module>
   </modules>
 </project>
