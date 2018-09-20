@@ -1,7 +1,7 @@
 package spring4.aopclass;
 
 public interface EatInterface {
-	void eat();
+	void eat() throws Exception;
 	
 	String eat(String name);
 }

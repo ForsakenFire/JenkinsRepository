@@ -1,16 +1,30 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<beans xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
-	   xmlns:context="http://www.springframework.org/schema/context"
-       xmlns="http://www.springframework.org/schema/beans"
-       xmlns:aop="http://www.springframework.org/schema/aop"
-       xsi:schemaLocation="http://www.springframework.org/schema/beans
-       http://www.springframework.org/schema/beans/spring-beans.xsd
-       http://www.springframework.org/schema/aop
-       http://www.springframework.org/schema/aop/spring-aop.xsd
-       http://www.springframework.org/schema/context   
-       http://www.springframework.org/schema/context/spring-context.xsd">
-       <context:component-scan base-package="spring4"></context:component-scan>
-       <!-- 基于aspect的aop开启 -->
-       <aop:aspectj-autoproxy></aop:aspectj-autoproxy>       
-      
+<beans  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+	    xmlns:context="http://www.springframework.org/schema/context"
+        xmlns="http://www.springframework.org/schema/beans"
+        xmlns:aop="http://www.springframework.org/schema/aop"
+        xsi:schemaLocation="http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/aop
+        http://www.springframework.org/schema/aop/spring-aop.xsd
+        http://www.springframework.org/schema/context   
+        http://www.springframework.org/schema/context/spring-context.xsd">
+        <context:component-scan base-package="spring4"></context:component-scan>
+        <!-- 基于aspect的aop开启 -->
+        <aop:aspectj-autoproxy></aop:aspectj-autoproxy>
+        <bean id="xmlAopClass" class="spring4.aopclass.XmlAopClass"></bean>
+        <bean id="breakfastImpl" class="spring4.aopclass.aspect.impl.BreakfastImpl"></bean>
+        <aop:config>
+            <aop:pointcut expression="execution(* spring4..*.eat(String)) and bean(breakfastImpl)" id="xmlPointCut1"/>
+            <aop:pointcut expression="execution(* spring4..*.eat(String)) and bean(breakfastImpl) and args(name)" id="xmlPointCut2"/>
+            <aop:pointcut expression="execution(* spring4..*.eat()) and bean(breakfastImpl)" id="xmlPointCut3"/>
+            <aop:aspect id="xmlAspect1" ref="xmlAopClass" >
+                <aop:after-returning method="xmlAopAspect" pointcut-ref="xmlPointCut1"/>
+                <aop:after method="xmlAopAspect2" arg-names="name" pointcut-ref="xmlPointCut2"/>
+                <!-- 基于xml的afterthrowing 
+                <aop:after-throwing method="xmlAopAspectException"  throwing="e"  pointcut-ref="xmlPointCut3"/>
+                -->
+            </aop:aspect>
+            
+        </aop:config>    
 </beans>
