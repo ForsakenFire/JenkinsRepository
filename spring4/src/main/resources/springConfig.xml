@@ -8,7 +8,7 @@
         http://www.springframework.org/schema/aop
         http://www.springframework.org/schema/aop/spring-aop.xsd
         http://www.springframework.org/schema/context   
-        http://www.springframework.org/schema/context/spring-context.xsd">
+        http://www.springframework.org/schema/context/spring-context.xsd" >
         <context:component-scan base-package="spring4"></context:component-scan>
         <!-- 基于aspect的aop开启 -->
         <aop:aspectj-autoproxy></aop:aspectj-autoproxy>
