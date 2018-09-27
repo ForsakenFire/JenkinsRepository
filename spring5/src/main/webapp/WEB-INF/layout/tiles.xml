@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE tiles-definitions PUBLIC
+       "-//Apache Software Foundation//DTD Tiles Configuration 3.0//EN"
+       "http://tiles.apache.org/dtds/tiles-config_3_0.dtd">
+<!--通过tiles实现页面布局的模块化-->
+<tiles-definitions>
+    <definition name="base" template="/WEB-INF/layout/base.jsp">
+        <!-- 相当于放入属性，需要使用标签完成嵌入 -->
+        <put-attribute name="top" value="/WEB-INF/layout/top.jsp" />
+        <put-attribute name="footer" value="/WEB-INF/layout/footer.jsp" />    
+        
+    </definition>
+    <definition name="myPage" extends="base"> 
+        <put-attribute name="body" value="/WEB-INF/layout/body.jsp" />
+    </definition>
+
+
+
+
+</tiles-definitions>
