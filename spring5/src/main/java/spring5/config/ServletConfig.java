@@ -37,17 +37,20 @@ import org.thymeleaf.templateresolver.ServletContextTemplateResolver;
 public class ServletConfig extends WebMvcConfigurerAdapter{
 
 	//使用jsp和apache tiles使用的视图解析器，需要时加上bean注解即可
+	@Bean
 	public ViewResolver viewResolver(){
 		/**适用于jsp的视图解析
+		 * 
+		 */
 		InternalResourceViewResolver resolver = new InternalResourceViewResolver();
 		resolver.setPrefix("/WEB-INF/view/");
 		resolver.setSuffix(".jsp");
 		resolver.setExposeContextBeansAsAttributes(true);
-		 * 
-		 */
-		//适用于tile视图解析:使用tils3
+		 
+		/**适用于tile视图解析:使用tils3
 		TilesViewResolver resolver = new TilesViewResolver();
 		resolver.setViewClass(TilesView.class);
+		*/
 		return resolver;
 	}
 	
@@ -56,7 +59,6 @@ public class ServletConfig extends WebMvcConfigurerAdapter{
 	 * @param templateEngine
 	 * @return
 	 */
-	@Bean
 	public ViewResolver viewResolver(SpringTemplateEngine templateEngine){
 		//适用于thymeleaf的视图解析器
 		ThymeleafViewResolver resolver = new ThymeleafViewResolver();
@@ -69,7 +71,6 @@ public class ServletConfig extends WebMvcConfigurerAdapter{
 	 * 生成thymeleaf模板引擎,并为模板引擎注入模板解析器
 	 * @return
 	 */
-	@Bean
 	public SpringTemplateEngine templateEngine(ITemplateResolver templateResolver){
 		SpringTemplateEngine engine = new SpringTemplateEngine();
 		engine.setTemplateResolver(templateResolver);
@@ -80,7 +81,6 @@ public class ServletConfig extends WebMvcConfigurerAdapter{
 	 * thymeleaf模板解析器
 	 * @return
 	 */
-	@Bean
 	public ITemplateResolver templateResolver(){
 		WebApplicationContext webApplicationContext = ContextLoader.getCurrentWebApplicationContext();
 		// ServletContextTemplateResolver需要一个ServletContext作为构造参数
@@ -99,7 +99,6 @@ public class ServletConfig extends WebMvcConfigurerAdapter{
 	 * apache tiles使用
 	 * @return
 	 */
-	@Bean
 	public TilesConfigurer tilesConfigurer(){
 		TilesConfigurer tiles = new TilesConfigurer();
 		//设置tiles定义xml，可以使用通配符
