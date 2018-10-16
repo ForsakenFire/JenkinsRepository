@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<flow xmlns="http://www.springframework.org/schema/webflow"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://www.springframework.org/schema/webflow 
+  http://www.springframework.org/schema/webflow/spring-webflow.xsd" >
+  <!-- 默认第一个state是初始的状态，当然可以通过flow的start-sate属性执行第一个流程 -->
+  <!-- output和input标签对于变量值的塞入：
+    output：将该流程的输出作为变量的属性值在外部塞入
+    input：将该变量传入流程内，在内部进行操作
+   -->
+  <!-- 创建一个order对象，作用域为整个流程内， -->
+  <var name="order" class="spring6_webflow.bean.Order"/>
+  <!-- 调用子流程，顾客登录 
+        增加条件：用户密码必须匹配，年龄必须小于20（大人不准买。。。）
+  -->
+  <subflow-state id="userLogin" subflow="order/login">
+    <output name="user" value="order.user"/>
+    <transition to="submitOrder" on="loginSuccess"/>
+  </subflow-state>
+  <!-- 调用子流程，提交订单 -->
+  <subflow-state id="submitOrder" subflow="order/submit">
+    <input name="order" value="order"/>
+    <transition on="submitSuccess" to="userPay" />
+  </subflow-state>
+  <!-- 调用子流程，顾客支付-->
+  <subflow-state id="userPay"  subflow="order/pay">
+    <input name="order" value="order"/>
+    <transition on="paySuccess" to="saveOrder"/>
+  </subflow-state>
+  <!-- 保存订单 -->
+  <action-state id="saveOrder">
+    <evaluate expression="orderFlowActions.saveOrder(order)" />
+    <transition to="userBye" />    
+  </action-state>
+  <!-- 显示结束页面，欢迎下次光临-->
+  <view-state id="userBye" view="goodByeView">
+    <transition  to="orderEndState"/>
+  </view-state>
+  <!-- 结束流程 -->
+  <end-state id="orderEndState" />
+  <!-- 全局的转移，取消操作 -->
+  <global-transitions>
+    <transition on="cancleOrder" to="orderEndState" />
+  </global-transitions>
+  
+  
+  
+  
+  </flow>
+  

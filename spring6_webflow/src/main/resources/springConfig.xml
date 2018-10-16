@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans  xmlns="http://www.springframework.org/schema/beans"  
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+	    xmlns:context="http://www.springframework.org/schema/context"
+        xmlns:flow="http://www.springframework.org/schema/webflow-config" 
+        xsi:schemaLocation="http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/context   
+        http://www.springframework.org/schema/context/spring-context.xsd 
+        http://www.springframework.org/schema/webflow-config
+        http://www.springframework.org/schema/webflow-config/spring-webflow-config.xsd">
+        <!-- 装配流程执行器，不负责加载流程定义 -->
+        <flow:flow-executor id="myExecutor"/>
+        <!-- 流程注册表：加载流程定义，供执行器使用 -->
+        <flow:flow-registry id="flowRegistry" base-path="classpath:/flows">
+            <!-- 模糊加载，也可以直接使用flowlocation进行定位。
+                                    每个流程都有id，这种写法的id是：xml文件相对于基本路径的路径名。
+                                    例如：flows/order/a-flow.xml所对应的id为order
+            <flow:flow-location-pattern path="*-flow.xml"/>
+            -->
+            <!-- 
+                                    使用<flow:flow-location进行配置时的id可以手动指定，默认取xml的名字为id
+            -->
+            <flow:flow-location id="orderMain" path="classpath:/flows/order/order-flow.xml" />
+            <flow:flow-location id="order/login" path="classpath:/flows/order/order-flow-login.xml" />
+            <flow:flow-location id="order/submit" path="classpath:/flows/order/order-flow-submit.xml" />
+            <flow:flow-location id="order/pay" path="classpath:/flows/order/order-flow-pay.xml" />
+        </flow:flow-registry>
+        <!-- FlowHanlderMapping的bean配置，用于将流程定向。帮助springmvc的前端控制器将流程请求分发到SpringWebFlow -->
+        <bean class="org.springframework.webflow.mvc.servlet.FlowHandlerMapping">
+            <property name="flowRegistry" ref="flowRegistry"></property>
+        </bean>        
+        <!-- 类比于controller，实际用来处理请求。是前端servlet和流程之间的桥梁，内部装配了执行器的引用 -->
+        <bean class="org.springframework.webflow.mvc.servlet.FlowHandlerAdapter">
+            <property name="flowExecutor" ref="myExecutor"></property>
+        </bean>        
+</beans>
