@@ -3,48 +3,53 @@
   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
   xsi:schemaLocation="http://www.springframework.org/schema/webflow 
   http://www.springframework.org/schema/webflow/spring-webflow.xsd" >
-  <!-- 默认第一个state是初始的状态，当然可以通过flow的start-sate属性执行第一个流程 -->
-  <!-- output和input标签对于变量值的塞入：
-    output：将该流程的输出作为变量的属性值在外部塞入
-    input：将该变量传入流程内，在内部进行操作
-   -->
-  <!-- 创建一个order对象，作用域为整个流程内， -->
-  <var name="order" class="spring6_webflow.bean.Order"/>
-  <!-- 调用子流程，顾客登录 
-        增加条件：用户密码必须匹配，年龄必须小于20（大人不准买。。。）
-  -->
-  <subflow-state id="userLogin" subflow="order/login">
-    <output name="user" value="order.user"/>
-    <transition to="submitOrder" on="loginSuccess"/>
-  </subflow-state>
-  <!-- 调用子流程，提交订单 -->
-  <subflow-state id="submitOrder" subflow="order/submit">
-    <input name="order" value="order"/>
-    <transition on="submitSuccess" to="userPay" />
-  </subflow-state>
-  <!-- 调用子流程，顾客支付-->
-  <subflow-state id="userPay"  subflow="order/pay">
-    <input name="order" value="order"/>
-    <transition on="paySuccess" to="saveOrder"/>
-  </subflow-state>
-  <!-- 保存订单 -->
-  <action-state id="saveOrder">
-    <evaluate expression="orderFlowActions.saveOrder(order)" />
-    <transition to="userBye" />    
-  </action-state>
-  <!-- 显示结束页面，欢迎下次光临-->
-  <view-state id="userBye" view="goodByeView">
-    <transition  to="orderEndState"/>
-  </view-state>
-  <!-- 结束流程 -->
-  <end-state id="orderEndState" />
-  <!-- 全局的转移，取消操作 -->
-  <global-transitions>
-    <transition on="cancleOrder" to="orderEndState" />
-  </global-transitions>
-  
-  
-  
-  
+  	<!-- 创建一个user对象，作用域为整个流程内， -->
+  	<var name="user" class="spring6_webflow.bean.User"/>
+  	<!-- 顾客登录流程 
+            	增加条件：用户密码必须匹配，年龄必须小于20（大人不准买。。。）
+  	-->
+  	<!-- 视图状态，欢迎并登录页 -->
+	<view-state id="welcomeUser" view="userWelcomeView">
+		<transition to="doLogin"/>	 	
+	</view-state>
+	<action-state id="doLogin">
+		<!-- 执行结果保存为user变量或填充至user变量,普通表单的值从request中取 -->
+		<evaluate result="user" expression="orderFlowActions.userLogin(requestParam.userName,requestParam.userPassword,requestParam.age)"></evaluate>
+		<!-- 抛出异常后跳转到注册视图 -->
+		<transition on-exception="spring6_webflow.exceptions.LoginFailedException" to="userRegister" />
+		<!-- 默认跳转到登录成功 -->
+		<transition to="loginSuccess"/>
+	</action-state>
+	<!-- 表单绑定user的模型 -->
+	<view-state id="userRegister" view="registerView" model="user">
+		<transition on="submitRegister" to="checkAge"></transition>
+	</view-state>
+	<!-- 判断年龄是否大于20 -->
+	<decision-state id="checkAge">
+		<if then="registerSuccess" test="orderFlowActions.checkAge(user.age)"
+		else="registerFailed"
+	/>	
+	</decision-state>
+	<view-state id="loginSuccess" view="loginSuccessView">
+		<transition to="loginOver"/>
+	</view-state>
+	<view-state id="registerSuccess" view="registerSuccessView">
+		<transition to="loginOver"/>
+	</view-state>
+	<view-state id="registerFailed" view="registerFailedView">
+		<transition to="loginOver"/>
+	</view-state>
+	<!-- 流程结束状态 -->
+	<end-state id="loginOver">
+		<!-- 作为子流程时的返回值，类比return 
+		<output name="user"/>
+		-->
+	</end-state>
+	<end-state id="cancle" />
+	<!-- 全局转移 -->
+	<global-transitions>
+		<transition on="cancle" to="cancle"></transition>
+	</global-transitions>
+	
   </flow>
   

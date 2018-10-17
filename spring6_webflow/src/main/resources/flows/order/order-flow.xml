@@ -15,13 +15,14 @@
   -->
   <subflow-state id="userLogin" subflow="order/login">
     <output name="user" value="order.user"/>
-    <transition to="submitOrder" on="loginSuccess"/>
+    <transition to="userPay" on="loginSuccess"/>
   </subflow-state>
-  <!-- 调用子流程，提交订单 -->
+  <!-- 调用子流程，提交订单
   <subflow-state id="submitOrder" subflow="order/submit">
     <input name="order" value="order"/>
     <transition on="submitSuccess" to="userPay" />
   </subflow-state>
+   -->
   <!-- 调用子流程，顾客支付-->
   <subflow-state id="userPay"  subflow="order/pay">
     <input name="order" value="order"/>
@@ -42,9 +43,5 @@
   <global-transitions>
     <transition on="cancleOrder" to="orderEndState" />
   </global-transitions>
-  
-  
-  
-  
   </flow>
   

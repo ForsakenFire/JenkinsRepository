@@ -4,10 +4,10 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>欢迎下次光临</title>
+<title>Cancle Page</title>
 </head>
 <body>
-<h1>欢迎下次光临</h1>
-<a href="${nextFlowUrl}&action=end">完成流程</a>
+<h1>流程取消页面</h1>
+<h2>NeverMind</h2>
 </body>
 </html>

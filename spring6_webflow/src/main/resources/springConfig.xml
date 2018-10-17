@@ -20,11 +20,14 @@
             -->
             <!-- 
                                     使用<flow:flow-location进行配置时的id可以手动指定，默认取xml的名字为id
+            demo中只启用了login流程
             -->
-            <flow:flow-location id="orderMain" path="classpath:/flows/order/order-flow.xml" />
             <flow:flow-location id="order/login" path="classpath:/flows/order/order-flow-login.xml" />
+            <!-- 
+            <flow:flow-location id="orderMain" path="classpath:/flows/order/order-flow.xml" />
             <flow:flow-location id="order/submit" path="classpath:/flows/order/order-flow-submit.xml" />
             <flow:flow-location id="order/pay" path="classpath:/flows/order/order-flow-pay.xml" />
+             -->
         </flow:flow-registry>
         <!-- FlowHanlderMapping的bean配置，用于将流程定向。帮助springmvc的前端控制器将流程请求分发到SpringWebFlow -->
         <bean class="org.springframework.webflow.mvc.servlet.FlowHandlerMapping">
@@ -33,5 +36,29 @@
         <!-- 类比于controller，实际用来处理请求。是前端servlet和流程之间的桥梁，内部装配了执行器的引用 -->
         <bean class="org.springframework.webflow.mvc.servlet.FlowHandlerAdapter">
             <property name="flowExecutor" ref="myExecutor"></property>
-        </bean>        
+        </bean>  
+        
+	    <bean id="flowViewResolver"  
+	        class="org.springframework.web.servlet.view.InternalResourceViewResolver">  
+	         <property name="viewClass"  
+	            value="org.springframework.web.servlet.view.JstlView">  
+	        </property>  
+	        <property name="prefix" value="/WEB-INF/view/login/">  
+	        </property>  
+	        <property name="suffix" value=".jsp">  
+	        </property>   
+	    </bean>  
+      
+    <!-- WebFlow 视图工厂构建服务 -->  
+    <webflow:flow-builder-services id="flowBuilderServices" view-factory-creator="mvcViewFactoryCreator" />  
+      
+    <!-- WebFlow 视图工厂创建器，表示使用视图解析器将流程配置(xml)中的逻辑视图交给视图解析器解析 → jsp -->  
+    <bean id="mvcViewFactoryCreator" class="org.springframework.webflow.mvc.builder.MvcViewFactoryCreator">  
+        <property name="viewResolvers" ref="flowViewResolver" />  
+    </bean>  
+      
+    
+        
+        
+              
 </beans>
