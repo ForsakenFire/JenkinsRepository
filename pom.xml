@@ -128,5 +128,6 @@
   	<module>spring4</module>
     <module>spring5</module>
     <module>spring6_webflow</module>
+    <module>spring7_SpringSecurity</module>
   </modules>
 </project>
