@@ -22,6 +22,12 @@
             <version>${spring.version}</version>
             <scope>test</scope>
         </dependency>
+        <!-- javaee依赖 -->
+        <dependency>
+            <groupId>javax</groupId>
+            <artifactId>javaee-api</artifactId>
+            <version>7.0</version>
+        </dependency>
         <!-- 运行时Spring容器 -->
         <dependency>
             <groupId>org.springframework</groupId>
@@ -128,7 +134,7 @@
   	<module>spring4</module>
     <module>spring5</module>
     <module>spring6_webflow</module>
-    <module>spring7_SpringSecurity</module>
     <module>spring7_security</module>
+    <module>spring8_jdbc</module>
   </modules>
 </project>

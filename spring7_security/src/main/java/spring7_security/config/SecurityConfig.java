@@ -103,6 +103,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
 	 * requiresChannel+requiresSecure:为选定的url强制使用https进行加密传输
 	 * requiresChannel+requiresInSecure:为选定的url强制使用http进行传输
 	 * 禁用csrf防护：不推荐
+	 * httpbasic验证：弹出框验证
+	 * rememberMe:默认是通过在cookie中存储一个token完成（默认两周有效）。
+	 * 		token中包含 用户名，密码，过期时间和一个私钥。通过key方法设置私钥的名
+	 * 页面上需要添加一个remember-me的单选框
+	 * 	默认的登出url为logout，可以设置登出完成后跳转的url
 	 */
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
@@ -116,8 +121,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
 		.and().requiresChannel().antMatchers("/httpsRequest").requiresSecure()
 		.and().csrf().disable();
 		*/
-		http.formLogin().and().authorizeRequests().antMatchers("/hello2").denyAll()
-		.and().requiresChannel().antMatchers("/hello").requiresSecure();
+		http.formLogin().loginPage("/login.do").and().httpBasic().realmName("/*.do").and().authorizeRequests().antMatchers("/hello2.do").denyAll()
+		.and().requiresChannel().antMatchers("/hello.do").requiresSecure().and()
+		.rememberMe().tokenValiditySeconds(2419200).key("rememberKey")
+		.and().logout().logoutSuccessUrl("/hello.do");
 		
 	}
 	
