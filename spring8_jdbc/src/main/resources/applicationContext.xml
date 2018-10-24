@@ -12,4 +12,12 @@
         http://www.springframework.org/schema/jee/spring-jee.xsd
         http://www.springframework.org/schema/context   
         http://www.springframework.org/schema/context/spring-context.xsd">
+        <!-- xml配置jndi 
+            jndi处于容器中时，需要设置resource-ref为 true,会自动添加java:comp/env/前缀
+        -->
+        <!-- MYSQL 
+        <jee:jndi-lookup id="tomcatDataSource" jndi-name="/jdbc/mysqlTest" resource-ref="true"/>
+        -->
+        <!-- Oracle -->
+        <jee:jndi-lookup id="tomcatDataSource" jndi-name="/jdbc/oracleTest" resource-ref="true"/>
 </beans>
