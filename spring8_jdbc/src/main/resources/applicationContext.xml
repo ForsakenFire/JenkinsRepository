@@ -15,9 +15,10 @@
         <!-- xml配置jndi 
             jndi处于容器中时，需要设置resource-ref为 true,会自动添加java:comp/env/前缀
         -->
-        <!-- MYSQL 
+        <!-- MYSQL -->
         <jee:jndi-lookup id="tomcatDataSource" jndi-name="/jdbc/mysqlTest" resource-ref="true"/>
-        -->
-        <!-- Oracle -->
+        
+        <!-- Oracle 
         <jee:jndi-lookup id="tomcatDataSource" jndi-name="/jdbc/oracleTest" resource-ref="true"/>
+        -->
 </beans>
