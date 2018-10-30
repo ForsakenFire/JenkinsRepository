@@ -15,7 +15,6 @@ public class HibernateDaoImpl implements HibernateDao{
 	@Autowired
 	private SessionFactory sessionFactory;
 
-	@SuppressWarnings("unused")
 	private Session getSession(){
 		//该方法获取的session基于事务，需要配置事务管理器
 		//普通session通过openSession获取，手动关闭即可
