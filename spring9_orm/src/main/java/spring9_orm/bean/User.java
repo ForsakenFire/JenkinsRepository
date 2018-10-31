@@ -6,8 +6,18 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+import org.hibernate.annotations.Proxy;
+import org.springframework.data.annotation.TypeAlias;
+
+/**
+ * 懒加载禁用：不推荐生产使用。
+ * 由于session是由Hibernate管理的，完成dao操作后会自动关闭导致。（懒加载导致异常）
+ * @author TD
+ *
+ */
 @Entity
 @Table(name="td_student")
+@Proxy(lazy=false)
 public class User {
 	
 	private int id;

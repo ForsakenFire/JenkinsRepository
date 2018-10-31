@@ -3,6 +3,7 @@ package spring9_orm.config;
 
 import java.util.Properties;
 
+import javax.persistence.EntityManagerFactory;
 import javax.sql.DataSource;
 
 import org.hibernate.SessionFactory;
@@ -14,8 +15,10 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.FilterType;
 import org.springframework.context.annotation.ImportResource;
 import org.springframework.dao.annotation.PersistenceExceptionTranslationPostProcessor;
+import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.orm.hibernate4.HibernateTransactionManager;
 import org.springframework.orm.hibernate4.LocalSessionFactoryBean;
+import org.springframework.orm.jpa.JpaTransactionManager;
 import org.springframework.orm.jpa.JpaVendorAdapter;
 import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
 import org.springframework.orm.jpa.vendor.Database;
@@ -33,6 +36,7 @@ import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 	excludeFilters={@Filter(type=FilterType.ANNOTATION,value=EnableWebMvc.class)})
 @ImportResource(locations="classpath:applicationContext.xml")
 @EnableTransactionManagement
+@EnableJpaRepositories(basePackages="spring9_orm.dao")
 public class RootConfig {
 	/**
 	 * 生成sessionFactory的bean
@@ -53,13 +57,23 @@ public class RootConfig {
 		return sessionFactoryBean;
 	}
 	/**
-	 * 事务管理器
+	 * Hibernate的事务管理器，使用JPA时不需要
+	 * @param sessionFactory
+	 * @return
+	 */
+	public HibernateTransactionManager transactionManager2(SessionFactory sessionFactory){
+		HibernateTransactionManager transactionManager = new HibernateTransactionManager(sessionFactory);
+		return transactionManager;
+	}
+	
+	/**
+	 * JPA的事务管理器
 	 * @param sessionFactory
 	 * @return
 	 */
 	@Bean
-	public HibernateTransactionManager transactionManager(SessionFactory sessionFactory){
-		HibernateTransactionManager transactionManager = new HibernateTransactionManager(sessionFactory);
+	public JpaTransactionManager transactionManager(EntityManagerFactory entityManagerFactory){
+		JpaTransactionManager transactionManager = new JpaTransactionManager(entityManagerFactory);
 		return transactionManager;
 	}
 	
