@@ -137,5 +137,6 @@
     <module>spring7_security</module>
     <module>spring8_jdbc</module>
     <module>spring9_orm</module>
+    <module>spring10_nosql</module>
   </modules>
 </project>
