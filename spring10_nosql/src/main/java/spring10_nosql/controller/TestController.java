@@ -38,6 +38,18 @@ public class TestController {
 		return "mongoTest";
 	}
 	
+	@RequestMapping("/neo4jTest")
+	public String getUser2(Model model){
+		User user = new User();
+		user.setAge(23);
+		user.setName("11月4日/小黄");
+		user.setPhone("111222");
+		user.setSex(2);
+		//查询
+		model.addAttribute("userName",null);
+		return "neo4jTest";
+	}
+	
 	
 	
 }
