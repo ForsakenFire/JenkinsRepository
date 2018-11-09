@@ -5,7 +5,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>RedisTest</title>
+<title>MongoTest</title>
 </head>
 <body>
 查询结果：${requestScope.userName}

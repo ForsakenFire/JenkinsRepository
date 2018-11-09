@@ -4,6 +4,7 @@ package spring10_nosql.controller;
 
 import java.util.List;
 
+import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.MongoOperations;
 import org.springframework.data.mongodb.core.query.Criteria;
@@ -12,6 +13,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import redis.clients.jedis.Jedis;
+import redis.clients.jedis.JedisSentinelPool;
 import spring10_nosql.bean.User;
 
 
@@ -20,6 +23,10 @@ public class TestController {
 	
 	@Autowired
 	private MongoOperations mongo;
+	//@Autowired
+	//private JedisSentinelPool pool;
+	@Autowired
+	private Jedis jedis;
 
 	
 	@RequestMapping("/mongoTest")
@@ -48,6 +55,16 @@ public class TestController {
 		//查询
 		model.addAttribute("userName",null);
 		return "neo4jTest";
+	}
+	
+	@RequestMapping("/redisTest")
+	public String redisTest(Model model){
+		//Jedis jedis = pool.getResource();
+		System.out.println(jedis.get("a"));
+		jedis.set("userName", "userNameTest");
+		jedis.close();
+		model.addAttribute("userName",jedis.get("userName"));
+		return "redisTest";
 	}
 	
 	
