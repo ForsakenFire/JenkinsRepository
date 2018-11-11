@@ -30,6 +30,6 @@ public interface MongoDao extends MongoRepository<User, Integer>{
 	 * 自定义查询条件,只接受json.
 	 * ?0表示与参数的该索引处的值匹配
 	 */
-	@Query("{'age':'21','phone':'?0'}")
-	List<User> abc(String phone);
+	//@Query("{'age':'21','phone':'?0'}")
+	//List<User> getByPhone(String phone);
 }

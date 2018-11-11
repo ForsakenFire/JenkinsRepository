@@ -12,6 +12,7 @@ import org.springframework.context.annotation.ImportResource;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.context.annotation.PropertySources;
 import org.springframework.context.support.PropertySourcesPlaceholderConfigurer;
+import org.springframework.data.mongodb.repository.config.EnableMongoRepositories;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 
 /**
@@ -25,7 +26,8 @@ import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 @ImportResource(locations="classpath:applicationContext.xml")
 @PropertySources({
 		@PropertySource("classpath:mongo.properties"),
-		@PropertySource("classpath:redis.properties")
+		@PropertySource("classpath:redis.properties"),
+		@PropertySource("classpath:redis2.properties")
 		})
 public class RootConfig {
 	
