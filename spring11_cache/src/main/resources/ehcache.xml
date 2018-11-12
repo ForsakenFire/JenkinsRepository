@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<encache>
+	<diskStore path="E:\cache"></diskStore>
+	<cache name="tdCache"
+			maxBytesLocalHeap="50m"
+			timeToLiveSeconds="60">
+	</cache>
+</encache>

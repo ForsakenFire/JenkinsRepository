@@ -138,5 +138,6 @@
     <module>spring8_jdbc</module>
     <module>spring9_orm</module>
     <module>spring10_nosql</module>
+    <module>spring11_cache</module>
   </modules>
 </project>

@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+        xmlns:context="http://www.springframework.org/schema/context"
+        xmlns="http://www.springframework.org/schema/beans"
+        xmlns:aop="http://www.springframework.org/schema/aop"
+        xmlns:jee="http://www.springframework.org/schema/jee"
+        xmlns:jpa="http://www.springframework.org/schema/data/jpa"
+        xsi:schemaLocation="http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/aop
+        http://www.springframework.org/schema/aop/spring-aop.xsd
+        http://www.springframework.org/schema/jee 
+        http://www.springframework.org/schema/jee/spring-jee.xsd
+        http://www.springframework.org/schema/data/jpa 
+        http://www.springframework.org/schema/data/jpa/spring-jpa-1.0.xsd
+        http://www.springframework.org/schema/context   
+        http://www.springframework.org/schema/context/spring-context.xsd">
+        <!-- xml配置jndi 
+            jndi处于容器中时，需要设置resource-ref为 true,会自动添加java:comp/env/前缀
+        -->
+        <!-- MYSQL -->
+        <jee:jndi-lookup id="tomcatDataSource" jndi-name="/jdbc/mysqlTest" resource-ref="true"/>
+        
+        <!-- Oracle 
+        <jee:jndi-lookup id="tomcatDataSource" jndi-name="/jdbc/oracleTest" resource-ref="true"/>
+        -->
+        <!-- 通过xml启用springdatajpa，扫描所有扩展自Repository的接口
+        <jpa:repositories base-package=""></jpa:repositories>
+         -->
+</beans>
