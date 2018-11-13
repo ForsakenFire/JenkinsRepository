@@ -2,6 +2,8 @@ package spring11_cache.config;
 
 
 
+import org.springframework.beans.factory.config.MethodInvokingFactoryBean;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.ComponentScan.Filter;
 import org.springframework.context.annotation.Configuration;
@@ -19,4 +21,5 @@ import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 	excludeFilters={@Filter(type=FilterType.ANNOTATION,value=EnableWebMvc.class)})
 @ImportResource(locations="classpath:applicationContext.xml")
 public class RootConfig {
+	
 }

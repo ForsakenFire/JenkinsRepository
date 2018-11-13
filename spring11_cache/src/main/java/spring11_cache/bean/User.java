@@ -1,17 +1,25 @@
 package spring11_cache.bean;
 
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
 
 /**
  * @author TD
  *
  */
+@Entity
+@Table(name="td_student")
 public class User {
 	private int id;
 	private String name;
 	private long sex;
 	private long age;
 	private String phone;
-	
+	@Id
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	public int getId() {
 		return id;
 	}
@@ -41,6 +49,10 @@ public class User {
 	}
 	public void setPhone(String phone) {
 		this.phone = phone;
+	}
+	@Override
+	public String toString() {
+		return "User [id=" + id + ", name=" + name + ", sex=" + sex + ", age=" + age + ", phone=" + phone + "]";
 	}
 	
 }

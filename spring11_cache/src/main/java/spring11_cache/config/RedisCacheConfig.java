@@ -17,6 +17,7 @@ import org.springframework.data.redis.connection.RedisSentinelConfiguration;
 import org.springframework.data.redis.connection.jedis.JedisConnectionFactory;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.serializer.Jackson2JsonRedisSerializer;
+import org.springframework.data.redis.serializer.JdkSerializationRedisSerializer;
 import org.springframework.data.redis.serializer.StringRedisSerializer;
 
 import spring11_cache.bean.User;
@@ -47,11 +48,16 @@ public class RedisCacheConfig {
 	}
 	
 	
+	/**
+	 * 注意key的类型,以及setKeySerializer
+	 * @param redisFactory
+	 * @return
+	 */
 	@Bean
-	public RedisTemplate<String , User> redisTemplate(RedisConnectionFactory redisFactory){
-		RedisTemplate<String, User> template = new RedisTemplate<>();
+	public RedisTemplate<Integer , User> redisTemplate(RedisConnectionFactory redisFactory){
+		RedisTemplate<Integer, User> template = new RedisTemplate<>();
 		template.setConnectionFactory(redisFactory);
-		template.setKeySerializer(new StringRedisSerializer());
+		template.setKeySerializer(new JdkSerializationRedisSerializer());
 		template.setValueSerializer(new Jackson2JsonRedisSerializer<>(User.class));
 		return template;
 	}
@@ -61,7 +67,7 @@ public class RedisCacheConfig {
 	 * spring直接支持，无需redis的cachemanager
 	 */
 	@Bean
-	public CacheManager cacheManager(RedisTemplate<String, User> redisTemplate) {
+	public CacheManager cacheManager(RedisTemplate<Integer, User> redisTemplate) {
 		return new RedisCacheManager(redisTemplate);
 	}
 	
