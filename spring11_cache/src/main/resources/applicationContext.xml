@@ -3,12 +3,15 @@
         xmlns:context="http://www.springframework.org/schema/context"
         xmlns="http://www.springframework.org/schema/beans"
         xmlns:aop="http://www.springframework.org/schema/aop"
+        xmlns:cache="http://www.springframework.org/schema/cache"
         xmlns:jee="http://www.springframework.org/schema/jee"
         xmlns:jpa="http://www.springframework.org/schema/data/jpa"
         xsi:schemaLocation="http://www.springframework.org/schema/beans
         http://www.springframework.org/schema/beans/spring-beans.xsd
         http://www.springframework.org/schema/aop
         http://www.springframework.org/schema/aop/spring-aop.xsd
+        http://www.springframework.org/schema/cache
+        http://www.springframework.org/schema/cache/spring-cache.xsd
         http://www.springframework.org/schema/jee 
         http://www.springframework.org/schema/jee/spring-jee.xsd
         http://www.springframework.org/schema/data/jpa 
@@ -27,4 +30,24 @@
         <!-- 通过xml启用springdatajpa，扫描所有扩展自Repository的接口
         <jpa:repositories base-package=""></jpa:repositories>
          -->
+         
+      	<!--      
+         	绑定缓存通知到一个切点上，需要配置cachemanager
+		<aop:config>
+			<aop:advisor advice-ref="mycache"
+				pointcut="execution(* spring12_cache.service.*(..))"
+			/>
+		</aop:config>
+         
+         
+         <cache:annotation-driven/>
+         <cache:advice id="mycache">
+         	<cache:caching>
+         		<cache:cacheable cache="user1" method="getUser"/>
+         		<cache:cache-put cache="user1" key="#result.id" method="saveUser"/>
+         	</cache:caching>
+         </cache:advice>
+         
+         <bean id="cacheMananger" class="org.springframework.cache.concurrent.ConcurrentMapCacheManager"/>
+          -->
 </beans>

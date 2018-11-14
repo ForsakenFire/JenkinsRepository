@@ -1,5 +1,6 @@
 package spring11_cache.service;
 
+import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.CachePut;
 import org.springframework.cache.annotation.Cacheable;
 
@@ -25,4 +26,10 @@ public interface UserService {
 	 */
 	@CachePut(value="user1",key="#result.id")
 	User saveUser(User user);
+	
+	/**
+	 *移除缓存 
+	 */
+	@CacheEvict("user1")
+	void deleteUser(int id);
 }

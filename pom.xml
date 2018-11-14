@@ -139,5 +139,6 @@
     <module>spring9_orm</module>
     <module>spring10_nosql</module>
     <module>spring11_cache</module>
+    <module>spring12_security2</module>
   </modules>
 </project>
