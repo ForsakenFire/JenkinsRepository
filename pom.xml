@@ -140,5 +140,8 @@
     <module>spring10_nosql</module>
     <module>spring11_cache</module>
     <module>spring12_security2</module>
+    <module>spring12_rmi</module>
+    <module>spring12_rmi_server</module>
+    <module>spring12_rmi_client</module>
   </modules>
 </project>
