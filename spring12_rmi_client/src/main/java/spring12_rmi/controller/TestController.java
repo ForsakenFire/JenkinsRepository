@@ -32,5 +32,12 @@ public class TestController {
 		return "rmiTest1";
 	}
 	
+	@RequestMapping("/hessianTest")
+	public String test2(Model model){
+		User user1 = service.getUser("hessian");
+		System.out.println(user1);
+		model.addAttribute("userInfo",user1.toString());
+		return "rmiTest1";
+	}
 	
 }

@@ -4,6 +4,7 @@ import java.util.Properties;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.remoting.caucho.BurlapServiceExporter;
 import org.springframework.remoting.caucho.HessianServiceExporter;
 import org.springframework.remoting.rmi.RmiServiceExporter;
 import org.springframework.web.servlet.HandlerMapping;
@@ -53,5 +54,18 @@ public class RMIConfig {
 		mappings.setProperty("/userService.service", "hessianUserService");
 		mapping.setMappings(mappings);
 		return mapping;
+	}
+	
+	/**
+	 * burlap，基于xml传输。方法已过时
+	 * @param userService
+	 * @return
+	 */
+	//@Bean
+	public BurlapServiceExporter burlapUserService(UserService userService) {
+		BurlapServiceExporter exporter = new BurlapServiceExporter();
+		exporter.setService(userService);
+		exporter.setServiceInterface(UserService.class);
+		return exporter;
 	}
 }
