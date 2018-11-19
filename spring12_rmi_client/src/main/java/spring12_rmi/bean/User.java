@@ -1,4 +1,4 @@
-package bean;
+package spring12_rmi.bean;
 
 import java.io.Serializable;
 

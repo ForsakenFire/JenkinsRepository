@@ -1,10 +1,11 @@
-package config;
+package spring12_rmi.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.remoting.rmi.RmiProxyFactoryBean;
 
-import service.UserService;
+import spring12_rmi.service.UserService;
+
 
 @Configuration
 public class RMIConfig {

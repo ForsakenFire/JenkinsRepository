@@ -1,4 +1,4 @@
-package config;
+package spring12_rmi.config;
 
 import org.springframework.web.servlet.support.AbstractAnnotationConfigDispatcherServletInitializer;
 

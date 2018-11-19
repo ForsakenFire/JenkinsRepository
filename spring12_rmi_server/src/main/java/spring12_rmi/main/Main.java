@@ -1,9 +1,9 @@
-package spring12_rmi_server.main;
+package spring12_rmi.main;
 
 
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 
-import spring12_rmi_server.config.RootConfig;
+import spring12_rmi.config.RootConfig;
 
 public class Main {
 	public static void main(String[] args) {

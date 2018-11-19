@@ -1,4 +1,4 @@
-package spring12_rmi_server.config;
+package spring12_rmi.config;
 
 
 
@@ -14,7 +14,7 @@ import org.springframework.web.servlet.config.annotation.EnableWebMvc;
  *
  */
 @Configuration
-@ComponentScan(basePackages="spring12_rmi_server",
+@ComponentScan(basePackages="spring12_rmi",
 	excludeFilters={@Filter(type=FilterType.ANNOTATION,value=EnableWebMvc.class)})
 public class RootConfig {
 	

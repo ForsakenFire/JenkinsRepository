@@ -1,6 +1,6 @@
-package service;
+package spring12_rmi.service;
 
-import spring12_rmi_client.bean.User;
+import spring12_rmi.bean.User;
 
 public interface UserService {
 

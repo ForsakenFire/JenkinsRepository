@@ -1,10 +1,10 @@
-package spring12_rmi_server.config;
+package spring12_rmi.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.remoting.rmi.RmiServiceExporter;
 
-import spring12_rmi_server.service.UserService;
+import spring12_rmi.service.UserService;
 
 @Configuration
 public class RMIConfig {
