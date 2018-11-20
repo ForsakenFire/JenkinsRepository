@@ -7,6 +7,6 @@
 <title>RMItest1</title>
 </head>
 <body>
-User:${requestScope.userinfo}
+User:${requestScope.userInfo}
 </body>
 </html>

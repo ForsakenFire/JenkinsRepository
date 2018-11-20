@@ -32,6 +32,10 @@ public class TestController {
 		return "rmiTest1";
 	}
 	
+	/**
+	 * @param model
+	 * @return
+	 */
 	@RequestMapping("/hessianTest")
 	public String test2(Model model){
 		User user1 = service.getUser("hessian");
