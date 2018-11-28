@@ -11,7 +11,10 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
@@ -48,6 +51,32 @@ public class TestController {
 		
 		return entity;
 	}
+	
+	@RequestMapping("/restGet/{id}")
+	public User getUser(@PathVariable String id) {
+		User user1 = new User();
+		user1.setAge(1);
+		user1.setName("restapi:"+id);
+		user1.setPhone("12321");
+		return user1;
+	}
+	
+	
+	@RequestMapping("/restPut/{id}")
+	public User modifyUser(@PathVariable String id,@RequestBody User user) {
+		User user1 = new User();
+		user1.setId(2);
+		user1.setAge(1);
+		user1.setName("restapi:"+id);
+		user1.setPhone("12321");
+		if("2".equals(id)) {
+			user1.setName(user.getName());
+		}
+		System.out.println("update:"+user1);
+		return user1;
+	}
+	
+	
 	
 	/**
 	 * 全局异常处理1，手动设置状态码，返回ResponseEntity.
