@@ -4,9 +4,11 @@ package spring13_rest.controller;
 
 
 import java.net.URI;
+import java.net.URL;
 
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -74,6 +76,25 @@ public class TestController {
 		}
 		System.out.println("update:"+user1);
 		return user1;
+	}
+	
+	@RequestMapping("/restPost")
+	public HttpHeaders addUser(@RequestBody User user) {
+		user.setId(233);
+		System.out.println("add:"+user);
+		HttpHeaders headers = new HttpHeaders();
+		headers.setLocation(URI.create("12321sad"));
+		return headers;
+	}
+	
+	@RequestMapping("/restExchange")
+	public ResponseEntity<User> exchangeUser(@RequestBody User user) {
+		user.setId(233);
+		System.out.println("exchange:"+user);
+		HttpHeaders headers = new HttpHeaders();
+		headers.setLocation(URI.create("12321sad"));
+		ResponseEntity<User> entity = new ResponseEntity<User>(user, headers, HttpStatus.OK);
+		return entity;
 	}
 	
 	
