@@ -144,5 +144,6 @@
     <module>spring12_rmi_client</module>
     <module>spring13_rest_server</module>
     <module>spring13_rest_client</module>
+    <module>spring14_jms</module>
   </modules>
 </project>
