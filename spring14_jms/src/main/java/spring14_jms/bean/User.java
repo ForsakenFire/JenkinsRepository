@@ -1,13 +1,15 @@
 package spring14_jms.bean;
 
-import java.io.Serializable;
 
 /**
  * @author TD
  *
  */
-@SuppressWarnings("serial")
-public class User implements Serializable{
+public class User{
+	
+	public User() {
+		
+	}
 	private int id;
 	private String name;
 	private long sex;

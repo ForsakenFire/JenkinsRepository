@@ -1,6 +1,10 @@
 package spring14_jms.config;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import javax.jms.ConnectionFactory;
+import javax.jms.Destination;
 
 import org.apache.activemq.command.ActiveMQQueue;
 import org.apache.activemq.command.ActiveMQTopic;
@@ -11,8 +15,15 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.core.env.Environment;
 import org.springframework.jms.core.JmsTemplate;
+import org.springframework.jms.listener.MessageListenerContainer;
+import org.springframework.jms.listener.SimpleMessageListenerContainer;
+import org.springframework.jms.listener.adapter.MessageListenerAdapter;
 import org.springframework.jms.support.converter.MappingJackson2MessageConverter;
 import org.springframework.jms.support.converter.MessageConverter;
+import org.springframework.jms.support.converter.MessageType;
+
+import spring14_jms.bean.User;
+import spring14_jms.mdb.UserAlertHandler;
 
 @Configuration
 @PropertySource("classpath:activemq.properties")
@@ -39,18 +50,45 @@ public class JMSConfig {
 		JmsTemplate template = new JmsTemplate(connectionFactory);
 		//设置默认的目的管道（主题或队列）
 		template.setDefaultDestinationName("user.queue1");
-		//设置消息转换器
-		//template.setMessageConverter(messageConverter);
+		//设置消息转换器，默认的转换器需要序列化
+		template.setMessageConverter(messageConverter);
 		return template;
 	} 
 	
 	/**
-	 * 消息转换器，这里转换为json
+	 * 消息转换器，这里转换为json。需要进行额外的映射
 	 */
 	@Bean
 	public MessageConverter messageConverter() {
 		MappingJackson2MessageConverter converter = new MappingJackson2MessageConverter();
+		converter.setTargetType(MessageType.TEXT);
+		//定义了typeid到class的map映射
+		Map<String, Class<?>> typeIdMap = new HashMap<>();
+		typeIdMap.put("User", User.class);
+		converter.setTypeIdMappings(typeIdMap);
+		//设置转换后发送到队列中的typeid名称，取数时通过typeidmap完成映射
+		converter.setTypeIdPropertyName("User");
 		return converter;
+	}
+	
+	@Bean
+	public SimpleMessageListenerContainer container(ConnectionFactory connectionFactory,MessageConverter messageConverter,MessageListenerAdapter adapter){
+		SimpleMessageListenerContainer container = new SimpleMessageListenerContainer();
+		container.setConnectionFactory(connectionFactory);
+		container.setDestinationName("user.queue1");
+		container.setMessageConverter(messageConverter);
+		container.setMessageListener(adapter);
+		return container;
+	}
+	
+	@Bean
+	public MessageListenerAdapter listenerAdapter(UserAlertHandler alertHandler,MessageConverter converter) {
+		MessageListenerAdapter adapter = new MessageListenerAdapter();
+		adapter.setDefaultResponseQueueName("user.queue1");
+		adapter.setDelegate(alertHandler);
+		adapter.setMessageConverter(converter);
+		adapter.setDefaultListenerMethod("alertUser");
+		return adapter;
 	}
 	
 	/**
