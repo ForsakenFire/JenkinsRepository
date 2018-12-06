@@ -145,5 +145,6 @@
     <module>spring13_rest_server</module>
     <module>spring13_rest_client</module>
     <module>spring14_jms</module>
+    <module>spring14_amqp</module>
   </modules>
 </project>
