@@ -34,13 +34,24 @@
        <rabbit:queue id="queue1" name="user.queue1"/>
        <rabbit:queue id="queue2" name="user.queue2"/>
        <rabbit:queue id="queue3" name="user.queue3"/>
-       <rabbit:fanout-exchange name="" id="exchange1" >
+       <rabbit:fanout-exchange name="exchange1" id="exchange1" >
        	<rabbit:bindings>
        		<rabbit:binding queue="user.queue1"></rabbit:binding>
        		<rabbit:binding queue="user.queue2"></rabbit:binding>
        		<rabbit:binding queue="user.queue3"></rabbit:binding>
        	</rabbit:bindings>
        </rabbit:fanout-exchange>
-       
-       
+       <!-- 定义RabbitTemplate，可以设置默认的exchange和routingkey -->
+       <rabbit:template id="rabbit1" connection-factory="connectionFactory"
+       	exchange="exchange1" message-converter="messageConverter"
+       	queue="user.queue1" 
+       />
+       <!-- 消息驱动bean的配置，同jms一样的配置，需要配置消息监听
+       	容器和消息监听器 -->
+       	<rabbit:listener-container connection-factory="connectionFactory" message-converter="messageConverter">
+       		<rabbit:listener ref="handler"
+       			method="receiveMessage"
+       			queue-names="user.queue1,user.queue2,user.queue3"
+       		/>
+       	</rabbit:listener-container>
 </beans>
