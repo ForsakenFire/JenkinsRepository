@@ -11,6 +11,7 @@ public class WebSocketHandler extends AbstractWebSocketHandler{
 	protected void handleTextMessage(WebSocketSession session, TextMessage message) throws Exception {
 		System.out.println("remoteAddress:"+session.getRemoteAddress());
 		System.out.println("message:"+message);
+		System.out.println("localAddress:"+session.getLocalAddress());
 		session.sendMessage(new TextMessage("Hey!".getBytes()));
 	}
 	

@@ -42,7 +42,7 @@ public class MyDispatchServletConfig extends AbstractAnnotationConfigDispatcherS
 	@Override
 	protected String[] getServletMappings() {
 		// TODO Auto-generated method stub
-		return new String[]{"*.do","/*"};
+		return new String[]{"*.do","/"};
 	}
 
 }

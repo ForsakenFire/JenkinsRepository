@@ -10,7 +10,6 @@
 <script type="text/javascript" src="/spring15_socket/js/sockjs-0.3.4.min.js"></script>
 <button onclick="test()">sockjs测试</button>
 
-
 </body>
 <script type="text/javascript">
 var url= "http://localhost:9999/spring15_socket/socket.do";
@@ -20,11 +19,15 @@ sock.open= function(){
 	sayHi();
 }
 
+function test(){
+	sayHi();
+}
+
 sock.onmessage = function(e){
 	console.log('receivedMessage'+e.data);
 	setTimeout(function() {
 		sayHi();
-	}, 50);
+	}, 1000);
 }
 
 sock.onclose = function(){

@@ -9,12 +9,14 @@ import org.springframework.web.socket.config.annotation.WebSocketConfigurer;
 import org.springframework.web.socket.config.annotation.WebSocketHandlerRegistry;
 
 /**
- * sockjs失效
+ * 若sockjs失效，请求变成/info错误：
+ * 注意：springmvc的拦截路径需要额外设置"/"
  * @author TD
+ * sockjs及普通websocket的配置
  *
  */
-@Configuration
-@EnableWebSocket
+//@Configuration
+//@EnableWebSocket
 public class SocketConfig implements WebSocketConfigurer{
 
 	/**
@@ -24,7 +26,7 @@ public class SocketConfig implements WebSocketConfigurer{
 	public void registerWebSocketHandlers(WebSocketHandlerRegistry registry) {
 		//注册handler启用sockjs
 		//sockjs可以自动选择备选方案使用websocket
-		registry.addHandler(handler(), "socket.do").withSockJS();
+		registry.addHandler(handler(), "/socket.do").withSockJS();
 	}
 	@Bean
 	public WebSocketHandler handler() {
