@@ -37,8 +37,9 @@ public class StompConfig extends AbstractWebSocketMessageBrokerConfigurer{
 	 */
 	@Override
 	public void configureMessageBroker(MessageBrokerRegistry registry) {
-		//基于内存实现的stomp代理，单机适用
+		/*基于内存实现的stomp代理，单机适用*/
 		registry.enableSimpleBroker("/queue","/topic");
+		
 		//以/td为目的地的消息使用MessageMapping控制器处理，不走代理
 		registry.setApplicationDestinationPrefixes("/td","/app");
 		/*基于mq实现stomp代理，适用于集群。
