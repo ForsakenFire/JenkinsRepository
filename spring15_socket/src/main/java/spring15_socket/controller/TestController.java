@@ -1,5 +1,8 @@
 package spring15_socket.controller;
 
+import java.sql.SQLException;
+
+import org.springframework.messaging.handler.annotation.MessageExceptionHandler;
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.handler.annotation.SendTo;
 import org.springframework.messaging.simp.annotation.SubscribeMapping;
@@ -35,6 +38,19 @@ public class TestController {
 		user.setName("messagemapping返回user");
 		return user;
 		
+	}
+	
+	/**
+	 * 用于处理messagemapping抛出的异常，类比exceptionhandler
+	 * @return
+	 */
+	@MessageExceptionHandler({Exception.class,SQLException.class})
+	@SendTo("/topic/errorTopic")
+	public User errorHandler(Throwable t) {
+		System.out.println("异常统一处理");
+		User user = new User();
+		user.setName("异常统一处理:"+t.getMessage());;
+		return user;
 	}
 	
 	

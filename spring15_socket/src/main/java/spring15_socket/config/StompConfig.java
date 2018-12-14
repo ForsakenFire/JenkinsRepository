@@ -37,20 +37,30 @@ public class StompConfig extends AbstractWebSocketMessageBrokerConfigurer{
 	 */
 	@Override
 	public void configureMessageBroker(MessageBrokerRegistry registry) {
-		/*基于内存实现的stomp代理，单机适用*/
+		/*基于内存实现的stomp代理，单机适用
 		registry.enableSimpleBroker("/queue","/topic");
-		
+		*/
 		//以/td为目的地的消息使用MessageMapping控制器处理，不走代理
 		registry.setApplicationDestinationPrefixes("/td","/app");
+		/**
+		 * 设置单独发送到某个user需要添加的前缀，用户订阅地址/user/topic/td1地址后会去掉/user，并加上用户名（需要springsecurity支持）等唯一标识组成新的目的地发送回去，
+		 * 对于这个url来说 加上后缀之后走代理。发送时需要制定用户名:convertAndSendToUser或者sendtouser注解.
+		registry.setUserDestinationPrefix("/user")
+		 */
 		/*基于mq实现stomp代理，适用于集群。
 		 * 以/topic和/queue开头的消息会发送到stomp代理中:mq等。
 		 * 每个mq适用的前缀不一样且有限制
-		 
+		 */
 		registry.enableStompBrokerRelay("/topic","/queue")
 		.setRelayHost(env.getProperty("mq.brokenHost"))
 		.setRelayPort(Integer.parseInt(env.getProperty("mq.brokenPort")))
+		.setSystemLogin(env.getProperty("mq.username"))
+		.setSystemPasscode(env.getProperty("mq.password"))
 		.setClientLogin(env.getProperty("mq.username"))
 		.setClientPasscode(env.getProperty("mq.password"));
+		/*
+		 * systemLogin:设置代理所需的密码
+		 * client:设置客户端连接代理所需的密码，默认为guest
 		*/
 	}
 	
